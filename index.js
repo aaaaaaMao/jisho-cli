@@ -2,15 +2,18 @@
 
 const { program } = require('commander')
 const JishoApi = require('unofficial-jisho-api')
-const jisho = new JishoApi()
-const Table = require('cli-table')
+const Table = require('cli-table3')
 
-program.option('-p, --phrase', 'search for phrase')
+const jisho = new JishoApi()
+
+program
+  .option('-p, --phrase', 'search for phrase')
   .option('-en, --english', 'search for phrase of english word')
 
 async function main() {
   program.parse(process.argv)
   const options = program.opts()
+
   let search = program.args.join().trim()
   if (options.english) {
     search = `"${search}"`
@@ -21,7 +24,7 @@ async function main() {
   const header = ['word', 'reading', 'is_common', 'jlpt']
   const table = new Table({
     head: header,
-    colWidths: [20, 20, 20, 20],
+    colWidths: [20, 30, 14, 10],
     colAligns: ['left'],
     style: { 'padding-right': 0 }
   })
